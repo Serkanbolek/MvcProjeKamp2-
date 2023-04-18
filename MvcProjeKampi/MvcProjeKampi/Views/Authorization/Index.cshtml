@@ -1,0 +1,55 @@
+﻿@using EntityLayer.Concrete
+@model List<Admin>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<form>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Kullanıcı Mail</th>
+            <th>Yetkiler</th>
+            <th>Durum</th>
+            <th>Durum Kontrol</th>
+            <th>Sil</th>
+            <th>Yetkisini Değiştir</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.AdminID</th>
+                <th>@item.AdminUserName</th>
+                <th>@item.AdminRole</th>
+                <th>
+                    @if (item.Status == true)
+                    {
+                        <a>Aktif</a>
+                    }
+                    else
+                    {
+                        <a>Pasif</a>
+                    }
+                </th>
+                <th>
+                    @if (item.Status == true)
+                    {
+                        <a id="btn1" name="@item.AdminID" href="/Authorization/statusAdmin/@item.AdminID" class="btn btn-danger">
+                            Pasif Yap
+                        </a>
+                    }
+                    else
+                    {
+                        <a id="btn1" name="@item.AdminID" href="/Authorization/statusAdmin/@item.AdminID"  class="btn btn-success">Aktif Yap</a>
+                    }
+                </th>
+                <td><a id="btn1" href="/Authorization/AdminDelete/@item.AdminID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Authorization/EditAdmin/@item.AdminID" class="btn btn-warning">Yetkisini Değiştir</a></td>
+            </tr>
+        }
+    </table>
+    <a href="/Authorization/AddAdmin" class="btn btn-info">Yeni Admin Tanımla</a>
+
+</form>

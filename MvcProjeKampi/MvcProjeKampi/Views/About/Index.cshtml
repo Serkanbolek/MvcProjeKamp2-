@@ -1,0 +1,50 @@
+﻿@using EntityLayer.Concrete
+@model List<About>
+@{
+    String Durum = "";
+    string Durum2 = "";
+    string clas = "";
+    string sty = "";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Hakımda Veri Listesi</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Hakkımda Başlığı</th>
+        <th>Durum</th>
+        <th>Aktif Yap</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.AboutID</td>
+    <td>@item.AboutDetails1</td>
+    @switch (item.AboutStatus)
+    {
+        case true:
+            Durum = "Pasif Yap";
+            Durum2 = "Aktif";
+            clas = "btn btn-danger btn-sm";
+            <td style="background-color: darkgreen; color: white" ;>
+                @Durum2
+            </td>
+            break;
+        case false:
+            Durum = "Aktif Yap";
+            Durum2 = "Aktif Değil";
+            clas = "btn btn-success btn-sm";
+            <td style="background-color: darkred; color: white" ;>
+                @Durum2
+            </td>
+            break;
+    }
+
+    <td><a href="/About/DeleteAbout/@item.AboutID" class="@clas">@Durum</a></td>
+</tr>
+    }
+</table>
+@Html.Action("AboutPartial", "About")
